@@ -1,11 +1,36 @@
-.App {
-  text-align: center;
-  font-family:Arial, Helvetica, sans-serif;
+.Introduce {
+  text-align: center;  /*글자 가운데 정렬*/
+  font-size: large;
+  font-family:Arial, Helvetica, sans-serif; 
   background-color: lightcoral;
-  
+  padding-top: 10px;
+  padding-bottom: 20px;
+
 }
 .img{ /*아미지 크기 조정*/
-  width: 50px;
-  height: 50px;
+  width: 300px;
+  height: auto;
   object-fit: contain;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display:inline-block;
+}
+.instagram{
+  width: 35px;
+  height: 35px;
+}
+.insta_id{
+  font-size:x-large;
+  font-style:italic;
+  margin-left: 10px;
+}
+.target{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.like_thing{
+  margin-top: 50px;
+  margin-bottom: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
