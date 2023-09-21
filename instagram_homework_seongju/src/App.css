@@ -1,38 +1,126 @@
 .App {
   text-align: center;
 }
+.whole_body{
+  position:absolute;
+  width: 1920px;
+  height: 1080px;
+}
+.body{
+  position:absolute;
+  width: 935px;
+  height: 1080px;
+  left: 492px;
+  padding: 0px, 0px, 380px, 0px;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+}
+.insta_logo{
+  position: absolute;
+  width:935px;
+  height:53px;
+  padding-top:9px;
+  padding-bottom:8px;
+  gap:10px; /*간격*/
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.plus_logo{
+  position : absolute;
+  width:22px;
+  height:22px;
+  top:16px;
+  left:825px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.mini_profile{
+  position : absolute;
+  width:22px;
+  height:22px;
+  top:16px;
+  left:915px;
+  border-radius:22px;
 }
 
-.App-link {
-  color: #61dafb;
+.profile{
+  position : absolute;
+  width: 322px;
+  height:150px;
+  padding: 0px, 101px, 0px, 71px;
+  gap: 10px;
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.main_profile{
+  position:absolute;
+  width: 150px;
+  height: 150px;
+  top: 120px;
+  left: 100px;
+  border-radius: 150px;
+}
+
+.profile_text{
+  position:absolute;
+  width: 613px;
+  height: 150px;
+  top:120px;
+  left:400px;
+  padding: 14px, 0px, 14px, 0px;
+}
+.post{
+  position: absolute;
+  width: 9px;
+  height: 18px;
+  top: 192px;
+  left: 453px;
+}
+.follower{
+  position: absolute;
+  width: 9px;
+  height: 18px;
+  top: 192px;
+  left: 537px;
+}
+.follow{
+  position: absolute;
+  width: 9px;
+  height: 18px;
+  top: 192px;
+  left: 623px;
+}
+.header_menu{
+  position: absolute;
+  width: 935px;
+  height: 53px;
+  top: 267px;
+  left:-492px;
+}
+.peed1{
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 320px;
+  left: -492px;
+  padding: 681px, 0px, 0px, 411px;
+}
+.peed2{
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 320px;
+  left: -173px;
+  padding: 100px, 25px, 100px, 25px;
+}
+.pard_logo{
+  position: absolute;
+  width: 260px;
+  height: 59px;
+  top: 440px;
+  left: -150px;
+}
+.peed3{
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 320px;
+  left: 142px;
 }
