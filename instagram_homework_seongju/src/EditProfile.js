@@ -60,7 +60,6 @@ function EditProfile(props){
     }
     const handlerSubmitChange = (event) => {
         event.preventDefault();
-        console.log(userName)
         props.onchange({
             name: userName,
             introduce: userIntroduce,
@@ -115,7 +114,7 @@ function EditProfile(props){
                             <span><img src = "miniProfile.png" alt ="중간프로필" className="middle_profile"/></span>
                             <div className="top_from">
                                 <p>{userName}</p>
-                                <a id="atag_change_profile" href="/edit-profile">프로필 사진 바꾸기</a>
+                                <a id="atag_change_profile"href="/edit-profile">프로필 사진 바꾸기</a>
                             </div>
                         </span>
                     </div><br></br>

@@ -1,6 +1,7 @@
 import React ,{useState,useEffect}from 'react';
 import './App.css';
 import './MyPage.js';
+import Home from './Home.js';
 import MyPage from './MyPage.js';
 import { BrowserRouter as Router, Routes,Route } from 'react-router-dom';
 import EditProfile from './EditProfile'; 
@@ -25,6 +26,7 @@ function App() {
       <Routes>
         <Route path="/edit-profile" element={<EditProfile user={user} onchange={handleUserChange}/>} />
         <Route path="/" element={<MyPage user={user}/>} />
+        <Route path="/home" element={<Home user={user}/>} />
       </Routes>
     </Router>
   );
