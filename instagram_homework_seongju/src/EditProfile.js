@@ -1,23 +1,32 @@
 import React, {useState,useEffect} from "react";
 import {Link} from 'react-router-dom';
 import styled from "styled-components";
+import './App.css';
 
 const SideBar = styled.span`
-    position:absolute;
     width: 220px;
     height:647px;
-    margin-left: 15%;
-    margin-top: 15%;
+    top:10%;
+
+`;
+const Button = styled.button`
+    width: 220px;
+    height: 50px;
+    border:none;
+    background-color: white;
+    font-weight: 600;
 `;
 const SideEditProfile = styled.div`
-  
-  background-color: skyblue;
+  width: 220px;
+  margin-top: 10%;
 `;
 
-const EditForm = styled.div`
-    position: absolute;
-    float:center;
-    margin-top: 15%;
+const EditForm = styled.form`
+    display: flex;
+    justify-content: center;
+    margin-left: 10%;
+    text-align: right;
+    margin-top: -65vh;
 `;
 
 function EditProfile(props){
@@ -27,6 +36,11 @@ function EditProfile(props){
     const [userSite, setUserSite] = useState(props.user.site)
     const [userEmail, setUserEmail] = useState(props.user.email)
     const [userGender, setUserGender] = useState(props.user.gender)
+    const [isFormDirty, setIsFormDirty] = useState(false);
+
+    const handleFieldChange = () => {
+        setIsFormDirty(true);
+      };
 
     const handleUserNameChange = (event) => {
         setUserName(event.target.value);
@@ -55,9 +69,18 @@ function EditProfile(props){
             gender: userGender,
           });
     }
+
+    const isSubmitDisabled = !isFormDirty || (
+        userName === props.user.name &&
+        userIntroduce === props.user.introduce &&
+        userSite === props.user.site &&
+        userEmail === props.user.email &&
+        userGender === props.user.gender
+      );
     
     return(
         <div className="whole_body">
+            <div className="body">
             <div className = "insta_logo">
                 <Link to="/">
                     <img src = "/Navigations.png" />
@@ -72,10 +95,10 @@ function EditProfile(props){
             <span className="sideBar">
                 <SideBar>
                     <SideEditProfile>
-                        <p>프로필 편집</p>
+                        <Button>프로필 편집</Button>
                     </SideEditProfile>
                     <div className="sideEditPassword">
-                        <p>비밀번호 변경</p>
+                        <Button>비밀번호 변경</Button>
                     </div>
                     <div className="sideMeta">
                         <img src="meta.png" alt="메타사진" className="meta"></img>
@@ -87,39 +110,51 @@ function EditProfile(props){
 
             <EditForm>
                 <form>
+                    <div className="currentProfile">
+                        <span className="from_label">
+                            <span><img src = "miniProfile.png" alt ="중간프로필" className="middle_profile"/></span>
+                            <div className="top_from">
+                                <p>{userName}</p>
+                                <a id="atag_change_profile" href="/edit-profile">프로필 사진 바꾸기</a>
+                            </div>
+                        </span>
+                    </div><br></br>
                     <div className="userName">
-                        <span>사용자 이름</span>
-                        <input type="text" value={userName} onChange={handleUserNameChange}></input>
+                        <span className="form_label">사용자 이름</span>
+                        <input type="text" value={userName} onChange={(e) => {setUserName(e.target.value);handleUserNameChange(e); handleFieldChange();}} className="form_size1"></input>
                     </div>
 
                     <div className="userIntroduce">
-                        <span>사용자 소개</span>
-                        <input type="text" value={userIntroduce} onChange={handleUserIntroduceChange}></input>
+                        <span className="form_label">사용자 소개</span>
+                        <input type="text" value={userIntroduce} onChange={(e) => {setUserIntroduce(e.target.value);handleUserIntroduceChange(e); handleFieldChange();}} className="form_size2"></input>
                     </div>
 
                     <div className="userSite">
-                        <span>웹사이트</span>
-                        <input type="text" value={userSite} onChange={handleUserSiteChange}></input>
+                        <span className="form_label">웹사이트</span>
+                        <input type="text" value={userSite} onChange={(e) => {setUserSite(e.target.value);handleUserSiteChange(e); handleFieldChange();}} className="form_size1"></input>
                     </div>
 
                     <div className="userEmail">
-                        <span>이메일</span>
-                        <input type="text" value={userEmail} onChange={handleUserEmailChange}></input>
+                        <span className="form_label">이메일</span>
+                        <input type="text" value={userEmail} onChange={(e) => {setUserEmail(e.target.value);handleUserEmailChange(e); handleFieldChange();}} className="form_size1"></input>
                     </div>
 
                     <div className="userGender">
-                        <span>성별</span>
-                        <input type="text" value={userGender} onChange={handleUserGenderChange}></input>
+                        <span className="form_label">성별</span>
+                        <input type="text" value={userGender} onChange={(e) => {setUserGender(e.target.value);handleUserGenderChange(e); handleFieldChange();}} className="form_size1"></input>
                     </div>
 
                     <div className="submitButton">
-                        <input type="submit" value="제출" onClick={handlerSubmitChange}></input>
+                        <input type="submit" value="제출" onClick={handlerSubmitChange} className="submit_button" disabled={isSubmitDisabled}></input>
                     </div>
 
                 </form>
 
             </EditForm>
         </div>
+                
+    </div>
+            
 
     );
 };

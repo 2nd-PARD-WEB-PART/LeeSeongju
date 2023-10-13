@@ -1,14 +1,41 @@
 import React from 'react';
 import './App.css';
+import { Link } from 'react-router-dom';
+import styled from "styled-components";
 
-function Profile(){
+
+const ProfileIntroduce = styled.div`
+  width:613px;
+  height:150px;
+  position:absolute;
+  margin-left: 350px;
+  margin-top: 120px;
+`;
+
+function Profile(props){
+
     return(
         <div className = "profile">
           <img src = "miniProfile.png" alt="메인프로필" className="main_profile"/>
-          <img src = "Desc.png" alt="프로필소개내용" className="profile_text"/>
-          <div className='post'>3</div>
-          <div className='follower'>777</div>
-          <div className='follow'>1</div>
+          <ProfileIntroduce>
+            <div className='proflieName'>
+              <span className='userProfileName'>{props.user.name}</span>
+              <Link to="/edit-profile">
+                <span>
+                  <img src="button.png" alt="프로필편집" className='profileEditButton'></img>
+                </span>
+                <img src="icon.png" alt="톱니바퀴아이콘" className='profileEditIcon'></img><br></br>
+              </Link>
+              <span className='post_mini'>게시물</span>
+              <span className='post_num'>3</span>
+              <span className='follower'>팔로워</span>
+              <span className='follower_num'>777</span>
+              <span className='follow'>팔로우</span>
+              <span className='follow_num'>1</span>
+              <p className='introduceMessage'>{props.user.introduce}</p>
+            </div>
+
+          </ProfileIntroduce>
         </div>
     )
 }
