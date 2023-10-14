@@ -13,11 +13,11 @@ function App() {
     introduce:'Pay it forward',
     site:'링크 추가하기',
     email:'...@gmail.com',
-    gender:'Male'
-  })
+    gender:'Male',
+    id:'sj_mon_'
+  });
 
   const handleUserChange = (event) => {
-    console.log(event)
     setUser(event);
   }
 

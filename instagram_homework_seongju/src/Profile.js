@@ -22,7 +22,7 @@ function Profile(props){
               <span className='userProfileName'>{props.user.name}</span>
               <Link to="/edit-profile">
                 <span>
-                  <button className='profileEditButton'>프로필 편집</button>
+                  <button className='profileEditButton' style={{cursor:"pointer"}}>프로필 편집</button>
                 </span>
                 <img src="icon.png" alt="톱니바퀴아이콘" className='profileEditIcon'></img><br></br>
               </Link>
