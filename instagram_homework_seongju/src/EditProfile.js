@@ -43,6 +43,12 @@ function EditProfile(props){
     const [userEmail, setUserEmail] = useState(props.user.email)
     const [userGender, setUserGender] = useState(props.user.gender)
     const [isFormDirty, setIsFormDirty] = useState(false);
+    const [isClicked, setIsClicked] = useState(false); /*사진바꾸기 */
+
+    const handleClick = () => {
+        
+        setIsClicked(!isClicked);
+    }
 
     const handleFieldChange = () => {
         setIsFormDirty(true);
@@ -118,10 +124,17 @@ function EditProfile(props){
                 <form>
                     <div className="currentProfile">
                         <span className="from_label">
-                            <span><img src = "miniProfile.png" alt ="중간프로필" className="middle_profile"/></span>
+                            <span>
+                            <img
+                            src={isClicked ? "miniProfile2.png" : "miniProfile.png"}
+                            alt="중간프로필"
+                            className="middle_profile"
+                            onClick={handleClick}
+                            />
+                            </span>
                             <div className="top_from">
                                 <p>{userName}</p>
-                                <a id="atag_change_profile"href="/edit-profile">프로필 사진 바꾸기</a>
+                                <button ><p id="atag_change_profile">프로필 사진 바꾸기</p></button>
                             </div>
                         </span>
                     </div><br></br>
