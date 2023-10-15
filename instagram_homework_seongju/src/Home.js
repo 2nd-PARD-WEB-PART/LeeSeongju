@@ -22,7 +22,7 @@ const PostPicture = styled.div`
     margin-top: 10%;
 `;
 const PostEmotion = styled.div`
-    margin-top: 5%;
+    margin-top: 3%;
 `;
 const MiddleProfile = styled.img`
     float:left;
@@ -37,7 +37,17 @@ const PostUserId = styled.span`
     margin-left: 3%;
     font-size: large;
     top:30px;
-
+    font-weight: 470;
+`;
+const PostHeaderButton = styled.button`
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    float:right;
+    border:none;
+    font-weight: bold;
+    font-size:large;
+    cursor:pointer;
 `;
 const Comment = styled.div`
 margin-top: 4%;
@@ -62,10 +72,22 @@ const WriteBox = styled.input`
     height:30px;
     border:none;
 `;
+const SubmitButton = styled.button`
+    background-color: white;
+    color:dodgerblue;
+    border:none;
+    font-size: large;
+    cursor:pointer;
+    margin-left: 10%;
+`;
 
 function Home({user}){
     const [likeCount, setLikeCount] = useState(285);
+    const [commentLikeCount, setCommentLikeCount] = useState(0);
+    const [newCommentLikeCount, setNewCommentLikeCount] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
+    const [isCommentLiked, setIsCommentLiked] = useState(false);
+    const [isNewCommentLiked, setIsNewCommentLiked] = useState(false);
     const [newComment, setNewComment] = useState(""); // 댓글 입력 상태
     const [comments, setComments] = useState([]); // 댓글 목록 상태
 
@@ -76,6 +98,22 @@ function Home({user}){
             setLikeCount(likeCount - 1);
         }
         setIsLiked(!isLiked);
+    }
+    const handleCommentLikeClick = () => {
+        if (!isCommentLiked) {
+            setCommentLikeCount(commentLikeCount + 1);
+        } else {
+            setCommentLikeCount(commentLikeCount - 1);
+        }
+        setIsCommentLiked(!isCommentLiked);
+    }
+    const handleNewCommentLikeClick = () => {
+        if (!isNewCommentLiked) {
+            setNewCommentLikeCount(newCommentLikeCount + 1);
+        } else {
+            setNewCommentLikeCount(newCommentLikeCount - 1);
+        }
+        setIsNewCommentLiked(!isNewCommentLiked);
     }
 
     const handleCommentChange = (e) => {
@@ -106,8 +144,8 @@ function Home({user}){
                 <BodyPost>
                     <div className="postHader">
                         <span><MiddleProfile src = "miniProfile.png" alt ="중간프로필" /></span>
-                        <PostUserId>sj_mon_</PostUserId>
-                        <button className="postHeaderButton">' ' '</button>
+                        <PostUserId>katarinabluu</PostUserId>
+                        <div><PostHeaderButton>' ' '</PostHeaderButton></div>
                     </div>
                     <PostPicture>
                         <img src="HipCat.png" alt="게시물 사진" className='post_picture' />
@@ -116,10 +154,13 @@ function Home({user}){
                         <PostEmotion>
                             <span><button onClick={handleLikeClick} className="heart_button">
                                 {isLiked
-                                    ? <img src="Vector.png" alt="" className="heart_icon" />
+                                    ? <img src="Vector.png" alt="" className="redheart_icon"/>
                                     : <img src="like.png" alt="" className="heart_icon" />
                                 }
                             </button></span>
+                            <button style={{backgroundColor:"white", border:"none"}}><img src="CommentIcon.png"></img></button>
+                            <button style={{backgroundColor:"white", border:"none"}}><img src="SharePosts.png" id="sharePost"></img></button>
+
                         </PostEmotion>
 
                         <div className="likeNum">
@@ -131,7 +172,13 @@ function Home({user}){
                             <div className="commentList">
                                 <span style={{fontWeight:'bold'}}>b2_ang</span>
                                 <span> 빵빵아! </span><br></br>
-                                <span style={{color:"grey"}}>1hours ago</span>
+                                <span style={{ color: "grey" }}>좋아요 {commentLikeCount} 개</span>
+                                <span><button onClick={handleCommentLikeClick} className="comment_heart_button">
+                                {isCommentLiked
+                                    ? <img src="redHeart.png" alt="" className="comment_redheart_icon"/>
+                                    : <img src="heart_icon.png" alt="" className="comment_heart_icon" />
+                                }
+                            </button></span>
                             </div>
                             
                             {comments.map((comment, index) => (
@@ -139,14 +186,20 @@ function Home({user}){
                                 <span style={{ fontWeight: "bold" }}>sj_mon</span>
                                 <span> {comment} </span>
                                 <br></br>
-                                <span style={{ color: "grey" }}>now</span>
+                                <span style={{ color: "grey" }}>좋아요 {newCommentLikeCount} 개</span>
+                                <span><button onClick={handleNewCommentLikeClick} className="comment_heart_button">
+                                {isNewCommentLiked
+                                    ? <img src="redHeart.png" alt="" className="comment_redheart_icon"/>
+                                    : <img src="heart_icon.png" alt="" className="comment_heart_icon" />
+                                }
+                            </button></span>
                                 </div>
                             ))}
 
                             <Comment>
                                 <SmileImg src="Smile.png"></SmileImg>
                                 <WriteBox type="text" placeholder="댓글달기..." value={newComment} onChange={(e) => setNewComment(e.target.value)}></WriteBox>
-                                <button onClick={handleCommentSubmit} >게시</button>
+                                <SubmitButton onClick={handleCommentSubmit} >게시 </SubmitButton>
                             </Comment>
 
                         </div>
