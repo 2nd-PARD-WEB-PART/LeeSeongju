@@ -233,7 +233,7 @@
   margin-bottom: 10%;
 }
 #atag_change_profile{
-
+  
   color:dodgerblue;
 }
 .post_picture{
@@ -259,4 +259,9 @@
   cursor: pointer;
   float:right;
   margin-top:-5%;
+  margin-right:4%;
+}
+#savePost{
+  float:right;
+  margin-right: 5%;
 }

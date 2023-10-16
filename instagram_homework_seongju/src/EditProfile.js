@@ -34,6 +34,11 @@ const EditForm = styled.form`
     text-align: right;
     margin-top: -65vh;
 `;
+const ChangeProfileButton = styled.button`
+    background-color: white;
+    border:none;
+    cursor:pointer;
+`;
 
 function EditProfile(props){
     /*여기서 값을 수정할 수 있는 변수 선언 위해 useState사용 */
@@ -134,7 +139,7 @@ function EditProfile(props){
                             </span>
                             <div className="top_from">
                                 <p>{userName}</p>
-                                <button ><p id="atag_change_profile">프로필 사진 바꾸기</p></button>
+                                <ChangeProfileButton><p id="atag_change_profile">프로필 사진 바꾸기</p></ChangeProfileButton>
                             </div>
                         </span>
                     </div><br></br>

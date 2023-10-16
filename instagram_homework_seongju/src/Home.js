@@ -78,7 +78,25 @@ const SubmitButton = styled.button`
     border:none;
     font-size: large;
     cursor:pointer;
-    margin-left: 10%;
+    margin-left: 13%;
+`;
+const RightPart = styled.div`
+    width:293px;
+    height:100%;
+    margin-left: 110%;
+    margin-top:-150%;
+
+`;
+const RightPartProfile = styled.img`
+    width:56px;
+    height:56px;
+    border-radius: 57px;
+`;
+const RightPartId = styled.p`
+    margin-top: -15%;
+    margin-left: 30%;
+    font-size: large;
+    
 `;
 
 function Home({user}){
@@ -160,6 +178,7 @@ function Home({user}){
                             </button></span>
                             <button style={{backgroundColor:"white", border:"none"}}><img src="CommentIcon.png"></img></button>
                             <button style={{backgroundColor:"white", border:"none"}}><img src="SharePosts.png" id="sharePost"></img></button>
+                            <button style={{backgroundColor:"white", border:"none"}} id="savePost"><img src="Save.png" ></img></button>
 
                         </PostEmotion>
 
@@ -203,6 +222,11 @@ function Home({user}){
                             </Comment>
 
                         </div>
+
+                        <RightPart>
+                            <RightPartProfile src="miniProfile.png"></RightPartProfile>                
+                            <RightPartId>sj_mon_</RightPartId>
+                        </RightPart>
 
                     </div>
                 </BodyPost>
