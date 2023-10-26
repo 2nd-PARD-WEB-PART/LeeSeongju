@@ -61,7 +61,6 @@ function EditProfile(props){
 
     const handleUserNameChange = (event) => {
         setUserName(event.target.value);
-        console.log(event.target.value)
     }
     const handleUserIntroduceChange = (event) => {
         setUserIntroduce(event.target.value);
