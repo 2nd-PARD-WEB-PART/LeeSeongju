@@ -152,6 +152,10 @@ function Home({user}){
       setComments([...comments, newComment]) 이거는 현재 댓글 배열에 끝에 새로운 댓글을 추가함
       ...은 배열 연산자로서 comment배열 뒤에 newcomment를추가한다는 듯
       setNewComment("")이걸 해줘야 다음 댓글 쓸 때 비어있음. 아니면 이전 댓글내용이 나옴*/
+
+      /** map 부분은 comment배열을 돌아다니면서 key값으로 index를 받음
+      index는 자동으로 증가하면서 순회함. 새로운 댓글 추가하면 comments배열에 댓글생성
+      span comment로 되어있는 부분이 현재 적힌 댓글들 목록을 다 보여줌 */ 
     return(
         <div className="whole_body">
             <div className="body">
@@ -222,9 +226,6 @@ function Home({user}){
                             </button></span>
                                 </div>
                             ))}
-                            /** 이 부분은 comment배열을 돌아다니면서 key값으로 index를 받음
-                            index는 자동으로 증가하면서 순회함. 새로운 댓글 추가하면 comments배열에 댓글생성
-                            span comment로 되어있는 부분이 현재 적힌 댓글들 목록을 다 보여줌 */
 
                             <Comment>
                                 <SmileImg src="Smile.png"></SmileImg>
