@@ -13,14 +13,15 @@ const ProfileIntroduce = styled.div`
   margin-top: 120px;
 `;
 
-function Profile(props){
-const data = useContext(MyContext);
+function Profile(){
+const {MyData,setUser} = useContext(MyContext);
+
     return(
         <div className = "profile">
           <img src = "miniProfile.png" alt="메인프로필" className="main_profile"/>
           <ProfileIntroduce>
             <div className='proflieName'>
-              <span className='userProfileName'>{data.name}</span>
+              <span className='userProfileName'>{MyData.name}</span>
               <Link to="/edit-profile">
                 <span>
                   <button className='profileEditButton' style={{cursor:"pointer", border:"1px solid darkgrey", marginLeft:"3%"}}>프로필 편집</button>
@@ -33,7 +34,7 @@ const data = useContext(MyContext);
               <span className='follower_num'>777</span>
               <span className='follow'>팔로우</span>
               <span className='follow_num'>1</span>
-              <p className='introduceMessage'>{data.introduce}</p>
+              <p className='introduceMessage'>{MyData.introduce}</p>
             </div>
 
           </ProfileIntroduce>

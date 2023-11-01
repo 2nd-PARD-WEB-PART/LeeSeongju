@@ -1,4 +1,5 @@
-import React, {useState,useEffect} from "react";
+import React, {useState,useContext} from "react";
+import { MyContext } from "./App";
 import {Link} from 'react-router-dom';
 import styled from "styled-components";
 import './App.css';
@@ -99,20 +100,36 @@ const RightPartId = styled.p`
 `;
 
 function Home({user}){
-    const [likeCount, setLikeCount] = useState(285); /**좋아요 수 설정 */
+    const {MyData, setUser,
+        likeCount,setLikeCount,
+        isLiked, setIsLiked,
+        comments, setComments} = useContext(MyContext);
+
     const [commentLikeCount, setCommentLikeCount] = useState(0); /**댓글 좋아요 수 설정 */
     const [newCommentLikeCount, setNewCommentLikeCount] = useState(0); /**새로운 댓글 좋아요 수 설정  */
-    const [isLiked, setIsLiked] = useState(false);/** 좋아요 눌러져있는지 확인. 초기값 false */
     const [isCommentLiked, setIsCommentLiked] = useState(false);/** 댓글 좋아요 눌러져있는지 확인. 초기값 false */
     const [isNewCommentLiked, setIsNewCommentLiked] = useState(false);/** 새로운 댓글 좋아요 눌러져있는지 확인. 초기값 false */
     const [newComment, setNewComment] = useState(""); /** 댓글 입력 상태 */
-    const [comments, setComments] = useState([]); /**댓글 목록 상태 */
 
     const handleLikeClick = () => {
         if (!isLiked) {
             setLikeCount(likeCount + 1);
+            setUser({
+                name: MyData.name,
+                introduce: MyData.introduce,
+                site: MyData.site,
+                email: MyData.email,
+                gender: MyData.gender,
+            });
         } else {
             setLikeCount(likeCount - 1);
+            setUser({
+                name: MyData.name,
+                introduce: MyData.introduce,
+                site: MyData.site,
+                email: MyData.email,
+                gender: MyData.gender,
+            });
         }
         setIsLiked(!isLiked);
     }/*처음에는 좋아요 버튼이 눌러져있는 지 확인 후 

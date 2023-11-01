@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useContext} from "react";
+import React, {useState,useContext} from "react";
 import {MyContext} from './App';
 import {Link} from 'react-router-dom';
 import styled from "styled-components";
@@ -41,15 +41,15 @@ const ChangeProfileButton = styled.button`
     cursor:pointer;
 `;
 
-function EditProfile(props){
-    const data = useContext(MyContext);
+function EditProfile(){
+    const {MyData, setUser} = useContext(MyContext);
     /*여기서 값을 수정할 수 있는 변수 선언 위해 useState사용 
     값 변경 유지를 위해서 props로 받아옴!!! props 활용 잘하기*/
-    const [userName, setUserName] = useState(data.name) /*props로 초기이름 설정 */
-    const [userIntroduce, setUserIntroduce] = useState(data.introduce)/*props로 초기소개 설정 */
-    const [userSite, setUserSite] = useState(data.site)/*props로 초기사이트 설정 */
-    const [userEmail, setUserEmail] = useState(data.email)/*props로 초기이메일 설정 */
-    const [userGender, setUserGender] = useState(data.gender)/*props로 초기성별 설정 */
+    const [userName, setUserName] = useState(MyData.name) /*props로 초기이름 설정 */
+    const [userIntroduce, setUserIntroduce] = useState(MyData.introduce)/*props로 초기소개 설정 */
+    const [userSite, setUserSite] = useState(MyData.site)/*props로 초기사이트 설정 */
+    const [userEmail, setUserEmail] = useState(MyData.email)/*props로 초기이메일 설정 */
+    const [userGender, setUserGender] = useState(MyData.gender)/*props로 초기성별 설정 */
     const [isFormDirty, setIsFormDirty] = useState(false);/*폼에 변경사항 있는지 확인 */
     const [isClicked, setIsClicked] = useState(false); /*사진바꾸기 */
 
@@ -79,21 +79,23 @@ function EditProfile(props){
     } /*사용자가 입력한 성별 가져와서 useName변수에 저장 */
     const handlerSubmitChange = (event) => {
         event.preventDefault();/*제출할 때 새로고침 안되게 하는 역할 */
-        props.onchange({ /*콜백 함수. 자식이나 부모 컴포넌트 사이에 정보전달*/
+        setUser({
             name: userName,
             introduce: userIntroduce,
             site: userSite,
             email: userEmail,
             gender: userGender,
-          });
+            like:MyData.like
+        });
+        
     } /*submit버튼 누르면 콜백함수로 현재 usestate에 있는 정보들 넘겨줌 */
 
     const isSubmitDisabled = !isFormDirty || (
-        userName === data.name &&
-        userIntroduce === data.introduce &&
-        userSite === data.site &&
-        userEmail === data.email &&
-        userGender === data.gender
+        userName === MyData.name &&
+        userIntroduce === MyData.introduce &&
+        userSite === MyData.site &&
+        userEmail === MyData.email &&
+        userGender === MyData.gender
       ); /*폼 변경사항이 없거나(isFormDity가 부정인 상황)
       또는 userState정보들이 초기 props의 값과 똑같은 상황에서
       폼 버튼 비활성화  */

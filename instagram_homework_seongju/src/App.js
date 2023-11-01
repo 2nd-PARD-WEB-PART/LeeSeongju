@@ -1,4 +1,4 @@
-import React ,{useState,useEffect, createContext, useContext}from 'react';
+import React ,{useState, createContext}from 'react';
 import './App.css';
 import './MyPage.js';
 import Home from './Home.js';
@@ -16,19 +16,21 @@ function App() {
     site:'링크 추가하기',
     email:'...@gmail.com',
     gender:'Male',
-    id:'sj_mon_'
+    id:'sj_mon_',
   });
 
-
-  const handleUserChange = (event) => {
-    setUser(event);
-  }
+  const [likeCount, setLikeCount] = useState(77);
+  const [isLiked, setIsLiked] = useState(false);
+  const [comments, setComments] = useState([]); /**댓글 목록 상태 */
 
   return (
-    <MyContext.Provider value={MyData}>
+    <MyContext.Provider value={{MyData, setUser,
+    likeCount,setLikeCount,
+    isLiked, setIsLiked,
+    comments, setComments}}>
       <Router>
         <Routes>
-          <Route path="/edit-profile" element={<EditProfile  onchange={handleUserChange}/>} />
+          <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/" element={<MyPage />} />
           <Route path="/home" element={<Home />} />
         </Routes>
