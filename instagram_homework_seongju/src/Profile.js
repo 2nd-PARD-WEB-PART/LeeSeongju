@@ -1,4 +1,5 @@
-import React from 'react';
+import React,{useContext} from 'react';
+import {MyContext} from './App';
 import './App.css';
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
@@ -13,13 +14,13 @@ const ProfileIntroduce = styled.div`
 `;
 
 function Profile(props){
-
+const data = useContext(MyContext);
     return(
         <div className = "profile">
           <img src = "miniProfile.png" alt="메인프로필" className="main_profile"/>
           <ProfileIntroduce>
             <div className='proflieName'>
-              <span className='userProfileName'>{props.user.name}</span>
+              <span className='userProfileName'>{data.name}</span>
               <Link to="/edit-profile">
                 <span>
                   <button className='profileEditButton' style={{cursor:"pointer", border:"1px solid darkgrey", marginLeft:"3%"}}>프로필 편집</button>
@@ -32,7 +33,7 @@ function Profile(props){
               <span className='follower_num'>777</span>
               <span className='follow'>팔로우</span>
               <span className='follow_num'>1</span>
-              <p className='introduceMessage'>{props.user.introduce}</p>
+              <p className='introduceMessage'>{data.introduce}</p>
             </div>
 
           </ProfileIntroduce>
