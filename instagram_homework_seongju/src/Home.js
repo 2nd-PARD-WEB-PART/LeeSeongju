@@ -19,7 +19,7 @@ const InstaLogo = styled.div`
     @media(max-width: 450px){
         width:50%;
     }
-`;
+`; /*모바일, 테블릿, 피시 버전 따라서 헤더 크기 조정 */
 const LeftHeaderIcon = styled.div`
     margin-top: 1%;
 `
@@ -167,7 +167,7 @@ const SubmitButton = styled.button`
     }
     text-align: right;
     padding:0;
-`;
+`;/*제출버튼 크기값 모바일과 모바일 아닐 때 서로 다르게 조정 */
 const MobileFooter = styled.div`
     display:flex;
     justify-content: center;
@@ -184,6 +184,8 @@ function Home(){
         likeCount,setLikeCount,
         isLiked, setIsLiked,
         comments, setComments} = useContext(MyContext);
+        /* 밑에서 쓰이는 useState 변수들을 모두 context에 넣어서  useContext로 사용
+        이렇게 하면 props없이 변경된 값이 다른 페이지에서도 바로 적용 가능함.*/
 
     const [commentLikeCount, setCommentLikeCount] = useState(0); /**댓글 좋아요 수 설정 */
     const [newCommentLikeCount, setNewCommentLikeCount] = useState(0); /**새로운 댓글 좋아요 수 설정  */
@@ -216,6 +218,7 @@ function Home(){
     안눌러져있다면 좋아요 숫자롤 하나 증가. 눌러져있으면 좋아요 숫자 감소 
     하트가 눌러져있으면 계속해서 if상태임. 다시누르면 else상태
     그래서 맨마지막에 다시 setIsLiked(!isLiked)*/
+
     const handleCommentLikeClick = () => {
         if (!isCommentLiked) {
             setCommentLikeCount(commentLikeCount + 1);
@@ -225,6 +228,7 @@ function Home(){
         setIsCommentLiked(!isCommentLiked);
     }/*처음에는 댓글 좋아요 안달려있 지 확인. 안달려 있으면 추가
     달려있다면 감소  위 좋아요 수랑 똑같이 구성함*/
+
     const handleNewCommentLikeClick = () => {
         if (!isNewCommentLiked) {
             setNewCommentLikeCount(newCommentLikeCount + 1);
@@ -246,12 +250,9 @@ function Home(){
       ...은 배열 연산자로서 comment배열 뒤에 newcomment를추가한다는 듯
       setNewComment("")이걸 해줘야 다음 댓글 쓸 때 비어있음. 아니면 이전 댓글내용이 나옴*/
 
-      /** map 부분은 comment배열을 돌아다니면서 key값으로 index를 받음
-      index는 자동으로 증가하면서 순회함. 새로운 댓글 추가하면 comments배열에 댓글생성
-      span comment로 되어있는 부분이 현재 적힌 댓글들 목록을 다 보여줌 */ 
     return(
         <div>
-            <MediaQuery minWidth={450} maxWidth={750}>
+            <MediaQuery minWidth={450} maxWidth={750}>{/**React-responsive 안에 있는MediaQuery 태그 이용. 태블릿 버전 구현*/}
                 <div className="container">
                     <InstaLogo>
                         <LeftHeaderIcon>
@@ -297,7 +298,7 @@ function Home(){
                                         {isLiked
                                             ? <img src="Vector.png" alt="" className="redheart_icon"/>
                                             : <img src="like.png" alt="" className="heart_icon" />
-                                        }
+                                        } {/** 좋아요 눌렸느냐 안눌렸느냐에 따라서 ?(true값=눌렸을때)는 빨간색 하트 :(false)일 때는 일반하트 */}
                                     </button></span>
                                     <button style={{backgroundColor:"white", border:"none"}}><img src="CommentIcon.png"></img></button>
                                     <button style={{backgroundColor:"white", border:"none"}}><img src="SharePosts.png" id="sharePost"></img></button>
@@ -339,6 +340,9 @@ function Home(){
                                 </button></span>
                                     </div>
                                 ))}
+                                {/* map 부분은 comment배열을 돌아다니면서 key값으로 index를 받음
+                                index는 자동으로 증가하면서 순회함. 새로운 댓글 추가하면 comments배열에 댓글생성
+                                span comment로 되어있는 부분이 현재 적힌 댓글들 목록을 다 보여줌 */}
 
                                 <Comment>
                                     <SmileImg src="Smile.png"></SmileImg>
@@ -351,7 +355,7 @@ function Home(){
                 </div>
             </MediaQuery>
 
-            <MediaQuery minWidth={750}>
+            <MediaQuery minWidth={750}> {/**React-responsive 안에 있는 MediaQuery 태그 이용. PC 버전 구현*/}
             <div className="container">
                     <InstaLogo>
                         <LeftHeaderIcon>
@@ -457,7 +461,7 @@ function Home(){
                 </div>
             </MediaQuery>
 
-            <MediaQuery maxWidth={450}>
+            <MediaQuery maxWidth={450}> {/**React-responsive 안에 있는 MediaQuery 태그 이용. 모바일 버전 구현*/}
                 <div className="container">
                     <InstaLogo>
                         <LogoButton><img src = "smal_insta.png" /></LogoButton>
