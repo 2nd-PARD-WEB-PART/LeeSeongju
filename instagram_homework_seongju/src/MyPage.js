@@ -7,6 +7,8 @@ import EditProfile from './EditProfile';
 import styled from "styled-components";
 
 const InstaLogo = styled.div`
+    display: flex;
+    justify-content: left;
     width:935;
     height:53px;
     margin-top:2%;
@@ -14,7 +16,7 @@ const InstaLogo = styled.div`
 
 function MyPage(props){
     return(
-        <div className = "whole_body">
+        <div className = "container">
             <div className = "body">
                 <InstaLogo>
                     <Link to="/home">

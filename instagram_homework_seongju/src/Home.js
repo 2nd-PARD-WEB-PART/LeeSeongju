@@ -5,73 +5,117 @@ import styled from "styled-components";
 import './App.css';
 
 const InstaLogo = styled.div`
-    width:935;
-    height:53px;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    width:50%;
     margin-top:2%;
 `;
-
+const LeftHeaderIcon = styled.div`
+    margin-top: 1%;
+`
+const RightHeaderIcon = styled.div`
+    margin-right: 1%;
+`
+const RightHeaderIconDetail = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding:1%;
+    width:130%;
+`
 const BodyPost = styled.div`
-    width:642px;
-    height:903px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin-top: 5%;
-
+    padding-top: 5%;
 `;
-const PostPicture = styled.div`
-    width:614px;
-    height:614px;
-    margin:0 auto;
-    margin-top: 10%;
+const ProfileAndId = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 3%;
 `;
-const PostEmotion = styled.div`
-    margin-top: 3%;
+const LeftComponent = styled.div`
+    display: flex;
+    flex-direction: row;
 `;
+const RightComponent = styled.div`
+    margin-right: 1%;
+`
 const MiddleProfile = styled.img`
-    float:left;
-    margin-left: 5%;
-    margin-top: 4%;
+    margin-left: 2vw;
+    margin-bottom: 2%;
     width:38px;
     height:38px;
     border-radius:22px;
 `;
-const PostUserId = styled.span`
-    position: relative;
-    margin-left: 3%;
+const PostUserId = styled.div`
     font-size: large;
-    top:30px;
+    margin-left: 3vw;
     font-weight: 470;
+    margin-top: 4%;
 `;
 const PostHeaderButton = styled.button`
     width: 40px;
     height: 40px;
+    margin-right: 1vw;
     background-color: white;
-    float:right;
     border:none;
     font-weight: bold;
     font-size:large;
     cursor:pointer;
 `;
+const PostPicture = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+const Post_picture =styled.img`
+    width:85%;
+    height:40%;
+`
+const PostEmotion = styled.div`
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    
+    margin-left: 3%;
+    margin-top: 3vh;
+`;
+const PostLeftEmotion = styled.div`
+    margin-top: 1%;
+`
+const PostRightEmotion = styled.div`
+    margin-top: 3%;
+    margin-right: 2%;
+`
 const Comment = styled.div`
+width:100%;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
 margin-top: 4%;
+margin-left:3%;
 margin-bottom: 4%;
 padding-bottom:4%;
+
 `;
+const CommentContainer = styled.div
 const SmileImg = styled.img`
     height:20px;
     width:20px;
 `;
 
-const WriteComment = styled.label`
-    margin-left: 3%;
-    font-size: large;
-    font-weight: bold;
-    padding-bottom: 2%;
-`;
-
 const WriteBox = styled.input`
+    display: flex;
     margin-left: 3%;
     width:70%;
     height:30px;
     border:none;
+    
 `;
 const SubmitButton = styled.button`
     background-color: white;
@@ -79,24 +123,7 @@ const SubmitButton = styled.button`
     border:none;
     font-size: large;
     cursor:pointer;
-    margin-left: 13%;
-`;
-const RightPart = styled.div`
-    width:293px;
-    height:100%;
-    margin-left: 110%;
-    margin-top:-150%;
-
-`;
-const RightPartProfile = styled.img`
-    width:56px;
-    height:56px;
-    border-radius: 57px;
-`;
-const RightPartId = styled.p`
-    margin-top: -15%;
-    margin-left: 30%;
-    font-size: large;
+    
 `;
 
 function Home({user}){
@@ -174,53 +201,71 @@ function Home({user}){
       index는 자동으로 증가하면서 순회함. 새로운 댓글 추가하면 comments배열에 댓글생성
       span comment로 되어있는 부분이 현재 적힌 댓글들 목록을 다 보여줌 */ 
     return(
-        <div className="whole_body">
-            <div className="body">
+        <div className="container">
                 <InstaLogo>
-                    <Link to="/home">
-                        <button style={{backgroundColor:'white', border:'none',cursor:'pointer'}}><img src = "Logo.png" /></button>
-                        <button className='home_button'><img src = "Menu-Button-Item.png" alt ="홈로고"/></button>
-                    </Link>
-                    <button className='header_heart'><img src='heart_icon.png' alt="헤더하트"></img></button>
-                    <img src = "NewPosts.png" alt ="더하기로고" className="plus_logo"/>
-                    <Link to="/">
-                        <img src = "miniProfile.png" alt ="작은프로필" className="mini_profile"/>
-                    </Link>
+                    <LeftHeaderIcon>
+                        <Link to="/home">
+                            <button style={{backgroundColor:'white', border:'none',cursor:'pointer'}}><img src = "Logo.png" /></button>
+                        </Link>
+                    </LeftHeaderIcon>
+                    <RightHeaderIcon>
+                        <RightHeaderIconDetail>
+                            <Link to="/home">
+                                <button className='home_home_button'><img src = "Menu-Button-Item.png" alt ="홈로고"/></button>
+                            </Link>
+                            <button className='home_header_heart'><img src='heart_icon.png' alt="헤더하트"></img></button>
+                            <img src = "NewPosts.png" alt ="더하기로고" className="home_plus_logo"/>
+                            <Link to="/">
+                                <img src = "miniProfile.png" alt ="작은프로필" className="home_mini_profile"/>
+                            </Link>
+                        </RightHeaderIconDetail>
+                    </RightHeaderIcon>
                 </InstaLogo>
 
                 <BodyPost>
-                    <div className="postHader">
-                        <span><MiddleProfile src = "miniProfile.png" alt ="중간프로필" /></span>
-                        <PostUserId>katarinabluu</PostUserId>
-                        <div><PostHeaderButton>' ' '</PostHeaderButton></div>
-                    </div>
+                  
+                        <ProfileAndId >
+                            <LeftComponent>
+                                <MiddleProfile src = "miniProfile.png" alt ="중간프로필" />
+                                <PostUserId>katarinabluu</PostUserId>
+                            </LeftComponent>
+                            <RightComponent>
+                                <PostHeaderButton>' ' '</PostHeaderButton>
+                            </RightComponent>     
+                        </ProfileAndId>
+             
                     <PostPicture>
-                        <img src="HipCat.png" alt="게시물 사진" className='post_picture' />
+                        <Post_picture src="army.png" alt="게시물 사진" className='post_picture' />
                     </PostPicture>
+
                     <div className="postFooter">
                         <PostEmotion>
-                            <span><button onClick={handleLikeClick} className="heart_button">
-                                {isLiked
-                                    ? <img src="Vector.png" alt="" className="redheart_icon"/>
-                                    : <img src="like.png" alt="" className="heart_icon" />
-                                }
-                            </button></span>
-                            <button style={{backgroundColor:"white", border:"none"}}><img src="CommentIcon.png"></img></button>
-                            <button style={{backgroundColor:"white", border:"none"}}><img src="SharePosts.png" id="sharePost"></img></button>
-                            <button style={{backgroundColor:"white", border:"none"}} id="savePost"><img src="Save.png" ></img></button>
+                            <PostLeftEmotion>
+                                <span><button onClick={handleLikeClick} className="heart_button">
+                                    {isLiked
+                                        ? <img src="Vector.png" alt="" className="redheart_icon"/>
+                                        : <img src="like.png" alt="" className="heart_icon" />
+                                    }
+                                </button></span>
+                                <button style={{backgroundColor:"white", border:"none"}}><img src="CommentIcon.png"></img></button>
+                                <button style={{backgroundColor:"white", border:"none"}}><img src="SharePosts.png" id="sharePost"></img></button>
 
+                            </PostLeftEmotion>
+                            <PostRightEmotion>
+                                <button style={{backgroundColor:"white", border:"none"}} id="savePost"><img src="Save.png" ></img></button>
+                            </PostRightEmotion>
                         </PostEmotion>
 
                         <div className="likeNum">
-                            <p>좋아요 {likeCount} 개</p>
+                            <p style={{marginLeft:'3%'}}>좋아요 {likeCount} 개</p>
                         </div>
 
                         <div className="postComment">
                             
                             <div className="commentList">
-                                <span style={{fontWeight:'bold'}}>b2_ang</span>
+                                <span style={{marginLeft:'3%',fontWeight:'bold'}}>b2_ang</span>
                                 <span> 빵빵아! </span><br></br>
-                                <span style={{ color: "grey" }}>좋아요 {commentLikeCount} 개</span>
+                                <span style={{marginLeft:'3%', color: "grey" }}>좋아요 {commentLikeCount} 개</span>
                                 <span><button onClick={handleCommentLikeClick} className="comment_heart_button">
                                 {isCommentLiked
                                     ? <img src="redHeart.png" alt="" className="comment_redheart_icon"/>
@@ -245,6 +290,7 @@ function Home({user}){
                             ))}
 
                             <Comment>
+
                                 <SmileImg src="Smile.png"></SmileImg>
                                 <WriteBox type="text" placeholder="댓글달기..." value={newComment} onChange={(e) => setNewComment(e.target.value)}></WriteBox>
                                 <SubmitButton onClick={handleCommentSubmit} >게시 </SubmitButton>
@@ -252,14 +298,13 @@ function Home({user}){
 
                         </div>
 
-                        <RightPart>
+                        {/* <RightPart>
                             <RightPartProfile src="miniProfile.png"></RightPartProfile>                
                             <RightPartId>sj_mon_</RightPartId>
-                        </RightPart>
+                        </RightPart> */}
 
                     </div>
                 </BodyPost>
-            </div>
 
         </div>
 
