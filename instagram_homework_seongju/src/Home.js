@@ -1,4 +1,6 @@
 import React, {useState,useContext} from "react";
+import {useMediaQuery} from 'react-responsive';
+import MediaQuery from "react-responsive";
 import { MyContext } from "./App";
 import {Link} from 'react-router-dom';
 import styled from "styled-components";
@@ -8,11 +10,29 @@ const InstaLogo = styled.div`
     display:flex;
     align-items: center;
     justify-content: space-between;
-    width:50%;
-    margin-top:2%;
+    @media(min-width: 750px){
+        width:75%;
+    }
+    @media(min-width: 450px)and(max-width: 750px){
+        width:50%;
+    }
+    @media(max-width: 450px){
+        width:50%;
+    }
 `;
 const LeftHeaderIcon = styled.div`
     margin-top: 1%;
+`
+const LogoButton = styled.button`
+    background-color: #fafafa;
+    border:none;
+    cursor:pointer;
+`
+const SearchInput = styled.input`
+    background-color: #fafafa;
+    border-color: lightgrey;
+    border-style: solid;
+    width:40%;
 `
 const RightHeaderIcon = styled.div`
     margin-right: 1%;
@@ -21,7 +41,23 @@ const RightHeaderIconDetail = styled.div`
     display: flex;
     justify-content: space-between;
     padding:1%;
-    width:130%;
+    width:120%;
+`
+const RightPart = styled.div`
+    width:75%;
+    display: flex;
+    justify-content: right;
+    margin-top: 5%;
+    margin-left: 5%;
+`
+const RightPartProfile = styled.img`
+    width:56px;
+    height:56px;
+    border-radius:56px;
+`
+const RightPartId = styled.div`
+    font-weight: bold;
+    margin-left: 5%;
 `
 const BodyPost = styled.div`
     width: 50%;
@@ -29,7 +65,8 @@ const BodyPost = styled.div`
     flex-direction: column;
     justify-content: center;
     margin-top: 5%;
-    padding-top: 5%;
+    padding-top: 3%;
+    background-color: #FFFFFF;
 `;
 const ProfileAndId = styled.div`
     display: flex;
@@ -92,7 +129,7 @@ const PostRightEmotion = styled.div`
     margin-right: 2%;
 `
 const Comment = styled.div`
-width:100%;
+
 display: flex;
 flex-direction: row;
 justify-content: space-between;
@@ -103,19 +140,16 @@ margin-bottom: 4%;
 padding-bottom:4%;
 
 `;
-const CommentContainer = styled.div
 const SmileImg = styled.img`
     height:20px;
     width:20px;
 `;
 
 const WriteBox = styled.input`
-    display: flex;
     margin-left: 3%;
-    width:70%;
+    width:55%;
     height:30px;
     border:none;
-    
 `;
 const SubmitButton = styled.button`
     background-color: white;
@@ -123,10 +157,29 @@ const SubmitButton = styled.button`
     border:none;
     font-size: large;
     cursor:pointer;
-    
+    @media(min-width: 450px){
+        width:30%;
+        margin-right: 5%;
+    }
+    @media(max-width: 450px){
+        width:30%;
+        margin-right: -8vw;
+    }
+    text-align: right;
+    padding:0;
 `;
+const MobileFooter = styled.div`
+    display:flex;
+    justify-content: center;
+    width:50%;
+`
+const FooterDetail = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+`
 
-function Home({user}){
+function Home(){
     const {MyData, setUser,
         likeCount,setLikeCount,
         isLiked, setIsLiked,
@@ -181,10 +234,6 @@ function Home({user}){
         setIsNewCommentLiked(!isNewCommentLiked);
     }/* 댓글 좋아요에 새로운 댓글 추가 좋아요 버전 */
 
-    const handleCommentChange = (e) => {
-        setNewComment(e.target.value);
-    }/*사용하지 않았음 */
-
     const handleCommentSubmit = () => {
         if (newComment.trim() !== "") {
           setComments([...comments, newComment]);
@@ -201,113 +250,311 @@ function Home({user}){
       index는 자동으로 증가하면서 순회함. 새로운 댓글 추가하면 comments배열에 댓글생성
       span comment로 되어있는 부분이 현재 적힌 댓글들 목록을 다 보여줌 */ 
     return(
-        <div className="container">
-                <InstaLogo>
-                    <LeftHeaderIcon>
-                        <Link to="/home">
-                            <button style={{backgroundColor:'white', border:'none',cursor:'pointer'}}><img src = "Logo.png" /></button>
-                        </Link>
-                    </LeftHeaderIcon>
-                    <RightHeaderIcon>
-                        <RightHeaderIconDetail>
+        <div>
+            <MediaQuery minWidth={450} maxWidth={750}>
+                <div className="container">
+                    <InstaLogo>
+                        <LeftHeaderIcon>
+                            <Link to="/home">
+                                <LogoButton><img src = "Logo.png" /></LogoButton>
+                            </Link>
+                        </LeftHeaderIcon>
+
+                        <RightHeaderIcon>
+                            <RightHeaderIconDetail>
+                                <Link to="/home">
+                                    <button className='home_home_button'><img src = "Menu-Button-Item.png" alt ="홈로고"/></button>
+                                </Link>
+                                <button className='home_header_heart'><img src='heart_icon.png' alt="헤더하트"></img></button>
+                                <img src = "NewPosts.png" alt ="더하기로고" className="home_plus_logo"/>
+                                <Link to="/">
+                                    <img src = "miniProfile.png" alt ="작은프로필" className="home_mini_profile"/>
+                                </Link>
+                            </RightHeaderIconDetail>
+                        </RightHeaderIcon>
+                    </InstaLogo>
+
+                    <BodyPost>
+                            <ProfileAndId >
+                                <LeftComponent>
+                                    <MiddleProfile src = "miniProfile.png" alt ="중간프로필" />
+                                    <PostUserId>katarinabluu</PostUserId>
+                                </LeftComponent>
+
+                                <RightComponent>
+                                    <PostHeaderButton>' ' '</PostHeaderButton>
+                                </RightComponent>     
+                            </ProfileAndId>
+                
+                        <PostPicture>
+                            <Post_picture src="army.png" alt="게시물 사진" className='post_picture' />
+                        </PostPicture>
+
+                        <div className="postFooter">
+                            <PostEmotion>
+                                <PostLeftEmotion>
+                                    <span><button onClick={handleLikeClick} className="heart_button">
+                                        {isLiked
+                                            ? <img src="Vector.png" alt="" className="redheart_icon"/>
+                                            : <img src="like.png" alt="" className="heart_icon" />
+                                        }
+                                    </button></span>
+                                    <button style={{backgroundColor:"white", border:"none"}}><img src="CommentIcon.png"></img></button>
+                                    <button style={{backgroundColor:"white", border:"none"}}><img src="SharePosts.png" id="sharePost"></img></button>
+                                </PostLeftEmotion>
+
+                                <PostRightEmotion>
+                                    <button style={{backgroundColor:"white", border:"none"}} id="savePost"><img src="Save.png" ></img></button>
+                                </PostRightEmotion>
+                            </PostEmotion>
+
+                            <div className="likeNum">
+                                <p style={{marginLeft:'3%'}}>좋아요 {likeCount} 개</p>
+                            </div>
+
+                            <div className="postComment">                     
+                                <div className="commentList">
+                                    <span style={{marginLeft:'3%',fontWeight:'bold'}}>b2_ang</span>
+                                    <span> 빵빵아! </span><br></br>
+                                    <span style={{marginLeft:'3%', color: "grey" }}>좋아요 {commentLikeCount} 개</span>
+                                    <span><button onClick={handleCommentLikeClick} className="comment_heart_button">
+                                    {isCommentLiked
+                                        ? <img src="redHeart.png" alt="" className="comment_redheart_icon"/>
+                                        : <img src="heart_icon.png" alt="" className="comment_heart_icon" />
+                                    }
+                                </button></span>
+                                </div>
+                                
+                                {comments.map((comment, index) => (
+                                    <div className="commentList" key={index}>
+                                    <span style={{ fontWeight: "bold" }}>sj_mon</span>
+                                    <span> {comment} </span>
+                                    <br></br>
+                                    <span style={{ color: "grey" }}>좋아요 {newCommentLikeCount} 개</span>
+                                    <span><button onClick={handleNewCommentLikeClick} className="comment_heart_button">
+                                    {isNewCommentLiked
+                                        ? <img src="redHeart.png" alt="" className="comment_redheart_icon"/>
+                                        : <img src="heart_icon.png" alt="" className="comment_heart_icon" />
+                                    }
+                                </button></span>
+                                    </div>
+                                ))}
+
+                                <Comment>
+                                    <SmileImg src="Smile.png"></SmileImg>
+                                    <WriteBox type="text" placeholder="댓글달기..." value={newComment} onChange={(e) => setNewComment(e.target.value)}></WriteBox>
+                                    <SubmitButton onClick={handleCommentSubmit} >게시 </SubmitButton>
+                                </Comment>
+                            </div>
+                        </div>
+                    </BodyPost>
+                </div>
+            </MediaQuery>
+
+            <MediaQuery minWidth={750}>
+            <div className="container">
+                    <InstaLogo>
+                        <LeftHeaderIcon>
+                            <Link to="/home">
+                                <button style={{backgroundColor:'white', border:'none',cursor:'pointer'}}><img src = "Logo.png" /></button>
+                            </Link>
+                        </LeftHeaderIcon>
+
+                        <RightHeaderIcon>
+                            <RightHeaderIconDetail>
+                                <Link to="/home">
+                                    <button className='home_home_button'><img src = "Menu-Button-Item.png" alt ="홈로고"/></button>
+                                </Link>
+                                <button className='home_header_heart'><img src='heart_icon.png' alt="헤더하트"></img></button>
+                                <img src = "NewPosts.png" alt ="더하기로고" className="home_plus_logo"/>
+                                <Link to="/">
+                                    <img src = "miniProfile.png" alt ="작은프로필" className="home_mini_profile"/>
+                                </Link>
+                            </RightHeaderIconDetail>
+                        </RightHeaderIcon>
+                    </InstaLogo>
+
+                    <RightPart>
+                        <RightPartProfile src="miniProfile.png"></RightPartProfile>                
+                        <RightPartId>sj_mon_</RightPartId>
+                    </RightPart>
+
+                    <BodyPost>
+                            <ProfileAndId >
+                                <LeftComponent>
+                                    <MiddleProfile src = "miniProfile.png" alt ="중간프로필" />
+                                    <PostUserId>katarinabluu</PostUserId>
+                                </LeftComponent>
+
+                                <RightComponent>
+                                    <PostHeaderButton>' ' '</PostHeaderButton>
+                                </RightComponent>     
+                            </ProfileAndId>
+                
+                        <PostPicture>
+                            <Post_picture src="army.png" alt="게시물 사진" className='post_picture' />
+                        </PostPicture>
+
+                        <div className="postFooter">
+                            <PostEmotion>
+                                <PostLeftEmotion>
+                                    <span><button onClick={handleLikeClick} className="heart_button">
+                                        {isLiked
+                                            ? <img src="Vector.png" alt="" className="redheart_icon"/>
+                                            : <img src="like.png" alt="" className="heart_icon" />
+                                        }
+                                    </button></span>
+                                    <button style={{backgroundColor:"white", border:"none"}}><img src="CommentIcon.png"></img></button>
+                                    <button style={{backgroundColor:"white", border:"none"}}><img src="SharePosts.png" id="sharePost"></img></button>
+                                </PostLeftEmotion>
+
+                                <PostRightEmotion>
+                                    <button style={{backgroundColor:"white", border:"none"}} id="savePost"><img src="Save.png" ></img></button>
+                                </PostRightEmotion>
+                            </PostEmotion>
+
+                            <div className="likeNum">
+                                <p style={{marginLeft:'3%'}}>좋아요 {likeCount} 개</p>
+                            </div>
+
+                            <div className="postComment">                     
+                                <div className="commentList">
+                                    <span style={{marginLeft:'3%',fontWeight:'bold'}}>b2_ang</span>
+                                    <span> 빵빵아! </span><br></br>
+                                    <span style={{marginLeft:'3%', color: "grey" }}>좋아요 {commentLikeCount} 개</span>
+                                    <span><button onClick={handleCommentLikeClick} className="comment_heart_button">
+                                    {isCommentLiked
+                                        ? <img src="redHeart.png" alt="" className="comment_redheart_icon"/>
+                                        : <img src="heart_icon.png" alt="" className="comment_heart_icon" />
+                                    }
+                                </button></span>
+                                </div>
+                                
+                                {comments.map((comment, index) => (
+                                    <div className="commentList" key={index}>
+                                    <span style={{ fontWeight: "bold" }}>sj_mon</span>
+                                    <span> {comment} </span>
+                                    <br></br>
+                                    <span style={{ color: "grey" }}>좋아요 {newCommentLikeCount} 개</span>
+                                    <span><button onClick={handleNewCommentLikeClick} className="comment_heart_button">
+                                    {isNewCommentLiked
+                                        ? <img src="redHeart.png" alt="" className="comment_redheart_icon"/>
+                                        : <img src="heart_icon.png" alt="" className="comment_heart_icon" />
+                                    }
+                                </button></span>
+                                    </div>
+                                ))}
+
+                                <Comment>
+                                    <SmileImg src="Smile.png"></SmileImg>
+                                    <WriteBox type="text" placeholder="댓글달기..." value={newComment} onChange={(e) => setNewComment(e.target.value)}></WriteBox>
+                                    <SubmitButton onClick={handleCommentSubmit} >게시 </SubmitButton>
+                                </Comment>
+                            </div>
+
+                        </div>
+                    </BodyPost>
+                </div>
+            </MediaQuery>
+
+            <MediaQuery maxWidth={450}>
+                <div className="container">
+                    <InstaLogo>
+                        <LogoButton><img src = "smal_insta.png" /></LogoButton>
+                        <SearchInput type="text" placeholder="검색"></SearchInput>
+                        <button className='home_header_heart'><img src='heart_icon.png' alt="헤더하트"></img></button>
+                    </InstaLogo>
+
+                    <BodyPost>
+                            <ProfileAndId >
+                                <LeftComponent>
+                                    <MiddleProfile src = "miniProfile.png" alt ="중간프로필" />
+                                    <PostUserId>katarinabluu</PostUserId>
+                                </LeftComponent>
+
+                                <RightComponent>
+                                    <PostHeaderButton>' ' '</PostHeaderButton>
+                                </RightComponent>     
+                            </ProfileAndId>
+                
+                        <PostPicture>
+                            <Post_picture src="army.png" alt="게시물 사진" className='post_picture' />
+                        </PostPicture>
+
+                        <div className="postFooter">
+                            <PostEmotion>
+                                <PostLeftEmotion>
+                                    <span><button onClick={handleLikeClick} className="heart_button">
+                                        {isLiked
+                                            ? <img src="Vector.png" alt="" className="redheart_icon"/>
+                                            : <img src="like.png" alt="" className="heart_icon" />
+                                        }
+                                    </button></span>
+                                    <button style={{backgroundColor:"white", border:"none"}}><img src="CommentIcon.png"></img></button>
+                                    <button style={{backgroundColor:"white", border:"none"}}><img src="SharePosts.png" id="sharePost"></img></button>
+                                </PostLeftEmotion>
+
+                                <PostRightEmotion>
+                                    <button style={{backgroundColor:"white", border:"none"}} id="savePost"><img src="Save.png" ></img></button>
+                                </PostRightEmotion>
+                            </PostEmotion>
+
+                            <div className="likeNum">
+                                <p style={{marginLeft:'3%'}}>좋아요 {likeCount} 개</p>
+                            </div>
+
+                            <div className="postComment">                     
+                                <div className="commentList">
+                                    <span style={{marginLeft:'3%',fontWeight:'bold'}}>b2_ang</span>
+                                    <span> 빵빵아! </span><br></br>
+                                    <span style={{marginLeft:'3%', color: "grey" }}>좋아요 {commentLikeCount} 개</span>
+                                    <span><button onClick={handleCommentLikeClick} className="comment_heart_button">
+                                    {isCommentLiked
+                                        ? <img src="redHeart.png" alt="" className="comment_redheart_icon"/>
+                                        : <img src="heart_icon.png" alt="" className="comment_heart_icon" />
+                                    }
+                                </button></span>
+                                </div>
+                                
+                                {comments.map((comment, index) => (
+                                    <div className="commentList" key={index}>
+                                    <span style={{ fontWeight: "bold" }}>sj_mon</span>
+                                    <span> {comment} </span>
+                                    <br></br>
+                                    <span style={{ color: "grey" }}>좋아요 {newCommentLikeCount} 개</span>
+                                    <span><button onClick={handleNewCommentLikeClick} className="comment_heart_button">
+                                    {isNewCommentLiked
+                                        ? <img src="redHeart.png" alt="" className="comment_redheart_icon"/>
+                                        : <img src="heart_icon.png" alt="" className="comment_heart_icon" />
+                                    }
+                                </button></span>
+                                    </div>
+                                ))}
+
+                                <Comment>
+                                    <SmileImg src="Smile.png"></SmileImg>
+                                    <WriteBox type="text" placeholder="댓글달기..." value={newComment} onChange={(e) => setNewComment(e.target.value)}></WriteBox>
+                                    <SubmitButton onClick={handleCommentSubmit} >게시 </SubmitButton>
+                                </Comment>
+                            </div>
+                        </div>
+                    </BodyPost>
+
+                    <MobileFooter>
+                        <FooterDetail>
                             <Link to="/home">
                                 <button className='home_home_button'><img src = "Menu-Button-Item.png" alt ="홈로고"/></button>
                             </Link>
-                            <button className='home_header_heart'><img src='heart_icon.png' alt="헤더하트"></img></button>
                             <img src = "NewPosts.png" alt ="더하기로고" className="home_plus_logo"/>
                             <Link to="/">
                                 <img src = "miniProfile.png" alt ="작은프로필" className="home_mini_profile"/>
                             </Link>
-                        </RightHeaderIconDetail>
-                    </RightHeaderIcon>
-                </InstaLogo>
-
-                <BodyPost>
-                  
-                        <ProfileAndId >
-                            <LeftComponent>
-                                <MiddleProfile src = "miniProfile.png" alt ="중간프로필" />
-                                <PostUserId>katarinabluu</PostUserId>
-                            </LeftComponent>
-                            <RightComponent>
-                                <PostHeaderButton>' ' '</PostHeaderButton>
-                            </RightComponent>     
-                        </ProfileAndId>
-             
-                    <PostPicture>
-                        <Post_picture src="army.png" alt="게시물 사진" className='post_picture' />
-                    </PostPicture>
-
-                    <div className="postFooter">
-                        <PostEmotion>
-                            <PostLeftEmotion>
-                                <span><button onClick={handleLikeClick} className="heart_button">
-                                    {isLiked
-                                        ? <img src="Vector.png" alt="" className="redheart_icon"/>
-                                        : <img src="like.png" alt="" className="heart_icon" />
-                                    }
-                                </button></span>
-                                <button style={{backgroundColor:"white", border:"none"}}><img src="CommentIcon.png"></img></button>
-                                <button style={{backgroundColor:"white", border:"none"}}><img src="SharePosts.png" id="sharePost"></img></button>
-
-                            </PostLeftEmotion>
-                            <PostRightEmotion>
-                                <button style={{backgroundColor:"white", border:"none"}} id="savePost"><img src="Save.png" ></img></button>
-                            </PostRightEmotion>
-                        </PostEmotion>
-
-                        <div className="likeNum">
-                            <p style={{marginLeft:'3%'}}>좋아요 {likeCount} 개</p>
-                        </div>
-
-                        <div className="postComment">
-                            
-                            <div className="commentList">
-                                <span style={{marginLeft:'3%',fontWeight:'bold'}}>b2_ang</span>
-                                <span> 빵빵아! </span><br></br>
-                                <span style={{marginLeft:'3%', color: "grey" }}>좋아요 {commentLikeCount} 개</span>
-                                <span><button onClick={handleCommentLikeClick} className="comment_heart_button">
-                                {isCommentLiked
-                                    ? <img src="redHeart.png" alt="" className="comment_redheart_icon"/>
-                                    : <img src="heart_icon.png" alt="" className="comment_heart_icon" />
-                                }
-                            </button></span>
-                            </div>
-                            
-                            {comments.map((comment, index) => (
-                                <div className="commentList" key={index}>
-                                <span style={{ fontWeight: "bold" }}>sj_mon</span>
-                                <span> {comment} </span>
-                                <br></br>
-                                <span style={{ color: "grey" }}>좋아요 {newCommentLikeCount} 개</span>
-                                <span><button onClick={handleNewCommentLikeClick} className="comment_heart_button">
-                                {isNewCommentLiked
-                                    ? <img src="redHeart.png" alt="" className="comment_redheart_icon"/>
-                                    : <img src="heart_icon.png" alt="" className="comment_heart_icon" />
-                                }
-                            </button></span>
-                                </div>
-                            ))}
-
-                            <Comment>
-
-                                <SmileImg src="Smile.png"></SmileImg>
-                                <WriteBox type="text" placeholder="댓글달기..." value={newComment} onChange={(e) => setNewComment(e.target.value)}></WriteBox>
-                                <SubmitButton onClick={handleCommentSubmit} >게시 </SubmitButton>
-                            </Comment>
-
-                        </div>
-
-                        {/* <RightPart>
-                            <RightPartProfile src="miniProfile.png"></RightPartProfile>                
-                            <RightPartId>sj_mon_</RightPartId>
-                        </RightPart> */}
-
-                    </div>
-                </BodyPost>
-
+                        </FooterDetail>
+                        
+                    </MobileFooter>
+                </div>
+            </MediaQuery>
         </div>
-
     );
 }
 
