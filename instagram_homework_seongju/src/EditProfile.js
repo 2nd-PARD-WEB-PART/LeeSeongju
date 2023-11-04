@@ -44,7 +44,7 @@ const ChangeProfileButton = styled.button`
 function EditProfile(){
     const {MyData, setUser} = useContext(MyContext);
     /*여기서 값을 수정할 수 있는 변수 선언 위해 useState사용 
-    값 변경 유지를 위해서 props로 받아옴!!! props 활용 잘하기*/
+    값 변경 유지를 위해서 Conext로 받아옴!!! 전체에 적용되는 값이라 사용*/
     const [userName, setUserName] = useState(MyData.name) /*props로 초기이름 설정 */
     const [userIntroduce, setUserIntroduce] = useState(MyData.introduce)/*props로 초기소개 설정 */
     const [userSite, setUserSite] = useState(MyData.site)/*props로 초기사이트 설정 */
@@ -88,7 +88,7 @@ function EditProfile(){
             like:MyData.like
         });
         
-    } /*submit버튼 누르면 콜백함수로 현재 usestate에 있는 정보들 넘겨줌 */
+    } /*submit버튼 누르면 context를 이용해서 현재 usestate에 있는 정보들 넘겨줌.*/
 
     const isSubmitDisabled = !isFormDirty || (
         userName === MyData.name &&
@@ -97,8 +97,8 @@ function EditProfile(){
         userEmail === MyData.email &&
         userGender === MyData.gender
       ); /*폼 변경사항이 없거나(isFormDity가 부정인 상황)
-      또는 userState정보들이 초기 props의 값과 똑같은 상황에서
-      폼 버튼 비활성화  */
+      또는 userState정보들이 초기 context의 값과 똑같은 상황에서
+      폼 버튼 비활성화 */
     
     return(
         <div className="whole_body">
