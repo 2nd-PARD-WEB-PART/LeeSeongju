@@ -9,6 +9,7 @@ import EditProfile from './EditProfile';
 
 export const MyContext = createContext();/** Context이용 위해서 선언 */
 
+
 function App() {
   const [MyData, setUser] = useState({
     name:'이성주',

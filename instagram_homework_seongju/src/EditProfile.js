@@ -1,40 +1,88 @@
 import React, {useState,useContext} from "react";
+import axios from 'axios';
 import {MyContext} from './App';
 import {Link} from 'react-router-dom';
 import styled from "styled-components";
 import './App.css';
 
 const InstaLogo = styled.div`
-    width:935;
-    height:53px;
-    margin-top:2%;
-`;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    @media(min-width: 750px){
+        width:75%;
+    }
+    @media(min-width: 450px)and(max-width: 750px){
+        width:50%;
+    }
+    @media(max-width: 450px){
+        width:50%;
+    }
+`; /*모바일, 테블릿, 피시 버전 따라서 헤더 크기 조정 */
+const LeftHeaderIcon = styled.div`
+    margin-top: 1%;
+`
+const LogoButton = styled.button`
+    background-color: #fafafa;
+    border:none;
+    cursor:pointer;
+`
+const RightHeaderIcon = styled.div`
+    margin-right: 1%;
+`
+const RightHeaderIconDetail = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding:1%;
+    width:120%;
+`
+const Body = styled.div`
+    width:80%;
+    height: 680px;
+    margin-top:10%;
+    margin-bottom:10%;
+    background-color: white;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+`
 
 const SideBar = styled.span`
-    width: 220px;
-    height:647px;
-    top:10%;
-
+    width: 70%;
+    height: 680px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
 `;
+const SideMeta = styled.div`
+    margin-top: 10%;
+`
 const Button = styled.button`
-    width: 220px;
-    height: 50px;
+    width: 15vw;
+    height: 8vh;
+    margin-top: 3%;
     border:none;
     background-color: white;
     font-weight: 600;
 `;
 const SideEditProfile = styled.div`
-  width: 220px;
-  margin-top: 10%;
+  width: 20%;
+  margin-top: 5%;
 `;
 
 const EditForm = styled.form`
+    width:120%;
     display: flex;
     justify-content: center;
-    margin-left: 10%;
     text-align: right;
-    margin-top: -65vh;
+    background-color: white;
 `;
+const FormDetail = styled.div`
+    display:flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+`
 const ChangeProfileButton = styled.button`
     background-color: white;
     border:none;
@@ -101,88 +149,99 @@ function EditProfile(){
       폼 버튼 비활성화 */
     
     return(
-        <div className="whole_body">
-            <div className="body">
-                <InstaLogo>
+        <div className="container">
+            <InstaLogo>
+                <LeftHeaderIcon>
                     <Link to="/">
-                        <button style={{backgroundColor:'white', border:'none',cursor:'pointer'}}><img src = "Logo.png" /></button>
-                        <button className='home_button'><img src = "Menu-Button-Item.png" alt ="홈로고"/></button>
+                        <LogoButton><img src = "Logo.png" /></LogoButton>
                     </Link>
-                    <button className='header_heart'><img src='heart_icon.png' alt="헤더하트"></img></button>
-                    <img src = "NewPosts.png" alt ="더하기로고" className="plus_logo"/>
-                    <Link to="/edit-profile">
-                        <img src = "miniProfile.png" alt ="작은프로필" className="mini_profile"/>
-                    </Link>
-                </InstaLogo>
+                </LeftHeaderIcon>
 
-            <span className="sideBar">
-                <SideBar>
-                    <SideEditProfile>
-                        <Button>프로필 편집</Button>
-                    </SideEditProfile>
-                    <div className="sideEditPassword">
-                        <Button>비밀번호 변경</Button>
-                    </div>
-                    <div className="sideMeta">
-                        <img src="meta.png" alt="메타사진" className="meta"></img>
+                <RightHeaderIcon>
+                    <RightHeaderIconDetail>
+                        <Link to="/home">
+                            <button className='home_home_button'><img src = "Menu-Button-Item.png" alt ="홈로고"/></button>
+                        </Link>
+                        <button className='home_header_heart'><img src='heart_icon.png' alt="헤더하트"></img></button>
+                        <img src = "NewPosts.png" alt ="더하기로고" className="home_plus_logo"/>
+                        <Link to="/">
+                            <img src = "miniProfile.png" alt ="작은프로필" className="home_mini_profile"/>
+                        </Link>
+                    </RightHeaderIconDetail>
+                </RightHeaderIcon>
+            </InstaLogo>
 
-                    </div>
-                </SideBar>
-
-            </span>
-
-            <EditForm>
-                <form>
-                    <div className="currentProfile">
-                        <span className="from_label">
-                            <span>
-                            <img
-                            src={isClicked ? "miniProfile2.png" : "miniProfile.png"}
-                            alt="중간프로필"
-                            className="middle_profile"
-                            onClick={handleClick}
-                            />
-                            </span>
-                            <div className="top_from">
-                                <p>{userName}</p>
-                                <ChangeProfileButton><p id="atag_change_profile">프로필 사진 바꾸기</p></ChangeProfileButton>
-                            </div>
-                        </span>
-                    </div><br></br>
-                    <div className="userName">
-                        <span className="form_label">사용자 이름</span>
-                        <input type="text" value={userName} onChange={(e) => {setUserName(e.target.value);handleUserNameChange(e); handleFieldChange();}} className="form_size1"></input>
-                    </div>
-
-                    <div className="userIntroduce">
-                        <span className="form_label">사용자 소개</span>
-                        <input type="text" value={userIntroduce} onChange={(e) => {setUserIntroduce(e.target.value);handleUserIntroduceChange(e); handleFieldChange();}} className="form_size2"></input>
-                    </div>
-
-                    <div className="userSite">
-                        <span className="form_label">웹사이트</span>
-                        <input type="text" value={userSite} onChange={(e) => {setUserSite(e.target.value);handleUserSiteChange(e); handleFieldChange();}} className="form_size1"></input>
-                    </div>
-
-                    <div className="userEmail">
-                        <span className="form_label">이메일</span>
-                        <input type="text" value={userEmail} onChange={(e) => {setUserEmail(e.target.value);handleUserEmailChange(e); handleFieldChange();}} className="form_size1"></input>
-                    </div>
-
-                    <div className="userGender">
-                        <span className="form_label">성별</span>
-                        <input type="text" value={userGender} onChange={(e) => {setUserGender(e.target.value);handleUserGenderChange(e); handleFieldChange();}} className="form_size1"></input>
-                    </div>
-
-                    <div className="submitButton">
-                        <input type="submit" value="제출" onClick={handlerSubmitChange} className="submit_button" disabled={isSubmitDisabled}></input>
-                    </div>
-
-                </form>
-
-            </EditForm>
-        </div>
+            <Body>
+                <div className="sideBar">
+                    <SideBar>
+                        <SideEditProfile>
+                            <Button>프로필 편집</Button>
+                            <Button>비밀번호 변경</Button>
+                        </SideEditProfile>
                 
+                        <SideMeta>
+                            <img src="meta.png" alt="메타사진" className="meta"></img>
+                        </SideMeta>
+                    </SideBar>
+                </div>
+
+                <div>
+                <EditForm>
+                    <form>
+                        <FormDetail>
+                            <div>
+                                <div className="currentProfile">
+                                    <span className="from_label">
+                                        <span>
+                                            <img
+                                            src={isClicked ? "miniProfile2.png" : "miniProfile.png"}
+                                            alt="중간프로필"
+                                            className="middle_profile"
+                                            onClick={handleClick}
+                                            />
+                                        </span>
+                                        <div className="top_from">
+                                            <p>{userName}</p>
+                                            <ChangeProfileButton><p id="atag_change_profile">프로필 사진 바꾸기</p></ChangeProfileButton>
+                                        </div>
+                                    </span>
+                                </div><br></br>
+                                <div className="userName">
+                                    <span className="form_label">사용자 이름</span>
+                                    <input type="text" value={userName} onChange={(e) => {setUserName(e.target.value);handleUserNameChange(e); handleFieldChange();}} className="form_size1"></input>
+                                </div>
+
+                                {/*<div className="userIntroduce">
+                                    <span className="form_label">사용자 소개</span>
+                                    <input type="text" value={userIntroduce} onChange={(e) => {setUserIntroduce(e.target.value);handleUserIntroduceChange(e); handleFieldChange();}} className="form_size2"></input>
+                                </div>*/}
+
+                                <div className="userSite">
+                                    <span className="form_label">나이</span>
+                                    <input type="text" value={userSite} onChange={(e) => {setUserSite(e.target.value);handleUserSiteChange(e); handleFieldChange();}} className="form_size1"></input>
+                                </div>
+
+                                <div className="userEmail">
+                                    <span className="form_label">파트</span>
+                                    <input type="text" value={userEmail} onChange={(e) => {setUserEmail(e.target.value);handleUserEmailChange(e); handleFieldChange();}} className="form_size1"></input>
+                                </div>
+                            </div>
+
+                            <div>
+
+                                <div className="submitButton">
+                                    <input type="submit" value="제출" onClick={handlerSubmitChange} className="submit_button" disabled={isSubmitDisabled}></input>
+                                </div>
+                            </div>
+                        </FormDetail>
+                    </form>
+
+                </EditForm> 
+                </div>
+            
+
+            </Body>
+  
     </div>
 
     );

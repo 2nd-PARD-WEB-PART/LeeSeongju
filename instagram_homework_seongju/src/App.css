@@ -186,6 +186,10 @@
 .sideMeta{
   margin-top: 30vh;
 }
+.meta{
+  width:13rem;
+  height:13rem;
+}
 .middle_profile{
   float:left;
     margin-left: 5%;

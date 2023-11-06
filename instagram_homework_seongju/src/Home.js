@@ -243,7 +243,7 @@ function Home(){
           setComments([...comments, newComment]);
           setNewComment("");
         }
-      }; /*댓글 추가하는 기능 
+      }; /*
       trim은 새로운 댓글이 공백이 아닌 문자열인지 확인. 
       trim은 양 끝 공백 제거 그리고 !==""로 결과가 비어있지 않는 문자열인지 확인
       setComments([...comments, newComment]) 이거는 현재 댓글 배열에 끝에 새로운 댓글을 추가함
