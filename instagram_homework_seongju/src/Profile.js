@@ -18,7 +18,7 @@ const {MyData,setUser} = useContext(MyContext);
 
     return(
         <div className = "profile">
-          <img src = "miniProfile.png" alt="메인프로필" className="main_profile"/>
+          <img src = {MyData.imgURL} alt="메인프로필" className="main_profile"/>
           <ProfileIntroduce>
             <div className='proflieName'>
               <span className='userProfileName'>{MyData.name}</span>

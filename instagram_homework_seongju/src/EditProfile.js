@@ -94,12 +94,15 @@ function EditProfile(){
     /*여기서 값을 수정할 수 있는 변수 선언 위해 useState사용 
     값 변경 유지를 위해서 Conext로 받아옴!!! 전체에 적용되는 값이라 사용*/
     const [userName, setUserName] = useState(MyData.name) /*props로 초기이름 설정 */
+    const [userAge, setUserAge] = useState(MyData.age)
+    const [userPart, setUserPart] = useState(MyData.part)
     const [userIntroduce, setUserIntroduce] = useState(MyData.introduce)/*props로 초기소개 설정 */
     const [userSite, setUserSite] = useState(MyData.site)/*props로 초기사이트 설정 */
     const [userEmail, setUserEmail] = useState(MyData.email)/*props로 초기이메일 설정 */
     const [userGender, setUserGender] = useState(MyData.gender)/*props로 초기성별 설정 */
     const [isFormDirty, setIsFormDirty] = useState(false);/*폼에 변경사항 있는지 확인 */
     const [isClicked, setIsClicked] = useState(false); /*사진바꾸기 */
+    const [userImg, setUserImg] = useState(MyData.imgURL)
 
     const handleClick = () => {
         
@@ -125,25 +128,27 @@ function EditProfile(){
     const handleUserGenderChange = (event) => {
         setUserGender(event.target.value);
     } /*사용자가 입력한 성별 가져와서 useName변수에 저장 */
+    const handleUserAgeChange = (event) =>{
+        setUserAge(event.target.value);
+    }
+    const handleUserPartChange = (event) =>{
+        setUserPart(event.target.value)
+    }
     const handlerSubmitChange = (event) => {
         event.preventDefault();/*제출할 때 새로고침 안되게 하는 역할 */
         setUser({
             name: userName,
+            age: userAge,
+            part: userPart,
             introduce: userIntroduce,
-            site: userSite,
-            email: userEmail,
-            gender: userGender,
-            like:MyData.like
         });
         
     } /*submit버튼 누르면 context를 이용해서 현재 usestate에 있는 정보들 넘겨줌.*/
 
     const isSubmitDisabled = !isFormDirty || (
         userName === MyData.name &&
-        userIntroduce === MyData.introduce &&
-        userSite === MyData.site &&
-        userEmail === MyData.email &&
-        userGender === MyData.gender
+        userAge === MyData.age&&
+        userPart === MyData.Part
       ); /*폼 변경사항이 없거나(isFormDity가 부정인 상황)
       또는 userState정보들이 초기 context의 값과 똑같은 상황에서
       폼 버튼 비활성화 */
@@ -194,7 +199,7 @@ function EditProfile(){
                                     <span className="from_label">
                                         <span>
                                             <img
-                                            src={isClicked ? "miniProfile2.png" : "miniProfile.png"}
+                                            src={isClicked ? "miniProfile2.png" : MyData.imgURL}
                                             alt="중간프로필"
                                             className="middle_profile"
                                             onClick={handleClick}
@@ -218,12 +223,12 @@ function EditProfile(){
 
                                 <div className="userSite">
                                     <span className="form_label">나이</span>
-                                    <input type="text" value={userSite} onChange={(e) => {setUserSite(e.target.value);handleUserSiteChange(e); handleFieldChange();}} className="form_size1"></input>
+                                    <input type="text" value={userAge} onChange={(e) => {setUserAge(e.target.value);handleUserSiteChange(e); handleFieldChange();}} className="form_size1"></input>
                                 </div>
 
                                 <div className="userEmail">
                                     <span className="form_label">파트</span>
-                                    <input type="text" value={userEmail} onChange={(e) => {setUserEmail(e.target.value);handleUserEmailChange(e); handleFieldChange();}} className="form_size1"></input>
+                                    <input type="text" value={userPart} onChange={(e) => {setUserPart(e.target.value);handleUserEmailChange(e); handleFieldChange();}} className="form_size1"></input>
                                 </div>
                             </div>
 

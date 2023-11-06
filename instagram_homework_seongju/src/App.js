@@ -1,10 +1,11 @@
-import React ,{useState, createContext}from 'react';
+import React ,{useState, createContext, useEffect}from 'react';
 import './App.css';
 import './MyPage.js';
 import Home from './Home.js';
 import MyPage from './MyPage.js';
 import { BrowserRouter as Router, Routes,Route } from 'react-router-dom';
 import EditProfile from './EditProfile'; 
+import axios from 'axios';
 /*import를 하지 않고 public폴더에 사진 넣어두고 꺼내 쓰는 방식 사용. */
 
 export const MyContext = createContext();/** Context이용 위해서 선언 */
@@ -12,13 +13,29 @@ export const MyContext = createContext();/** Context이용 위해서 선언 */
 
 function App() {
   const [MyData, setUser] = useState({
-    name:'이성주',
+    name:'',
+    age:'',
+    part:'',
+    imgURL:'',
     introduce:'Pay it forward',
-    site:'링크 추가하기',
-    email:'...@gmail.com',
-    gender:'Male',
-    id:'sj_mon_',
   });
+
+  const [data, setData] = useState();
+  useEffect(() => {
+    axios
+      .get("http://3.35.236.83/pard/search/이성주")
+      .then((response) => {
+        setData(JSON.stringify(response.data.data));
+        setUser(response.data.data);
+        setUser(prevMyData => ({
+          ...prevMyData, // 기존 MyData 객체의 모든 속성을 복사
+          introduce: 'pay it forward' // id 속성만 변경
+        }));
+        
+      })
+      .catch((error) => console.log("error: " + error));
+  }, []);
+  
   /** 저장할 기본적인 data값들. Context를 이용해서 바꿔줌 값들임. */
 
   const [likeCount, setLikeCount] = useState(77);
