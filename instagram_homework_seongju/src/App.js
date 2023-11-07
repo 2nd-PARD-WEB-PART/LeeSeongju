@@ -19,14 +19,15 @@ function App() {
     imgURL:'',
     introduce:'Pay it forward',
   });
+  /** 저장할 기본적인 data값들. axios로 기본값 설정 후 Context를 이용해서 바꿔줌 값들임. */
 
   const [data, setData] = useState();
-  useEffect(() => {
+  useEffect(() => { // useEffect사용해서 비동기식으로 데이터 가져옴.
     axios
-      .get("http://3.35.236.83/pard/search/이성주")
+      .get("http://3.35.236.83/pard/search/이성주") 
       .then((response) => {
         setData(JSON.stringify(response.data.data));
-        setUser(response.data.data);
+        setUser(response.data.data); // 데이터 저장할 때 name, age, part, imgURL만 가져오고 나머지 항목은 빈상태로 가져옴
         setUser(prevMyData => ({
           ...prevMyData, // 기존 MyData 객체의 모든 속성을 복사
           introduce: 'pay it forward' // id 속성만 변경
@@ -35,8 +36,7 @@ function App() {
       })
       .catch((error) => console.log("error: " + error));
   }, []);
-  
-  /** 저장할 기본적인 data값들. Context를 이용해서 바꿔줌 값들임. */
+  /* axios로 서버로부터 name, age, part, imgURL 값들을 받아와서 MyData값에다가 넣음. */
 
   const [likeCount, setLikeCount] = useState(77);
   const [isLiked, setIsLiked] = useState(false);

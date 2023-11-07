@@ -83,11 +83,6 @@ const FormDetail = styled.div`
     flex-direction: column;
     justify-content: space-between;
 `
-const ChangeProfileButton = styled.button`
-    background-color: white;
-    border:none;
-    cursor:pointer;
-`;
 
 function EditProfile(){
     const {MyData, setUser} = useContext(MyContext);/*useCOntext로 MyContext값들을 가져옴 */
@@ -115,8 +110,12 @@ function EditProfile(){
     }*/
     
     const handleFileUpload = (event) => {
-      const formData = new FormData();
+      const formData = new FormData();/* 대부분 폼에서 파일 업로드할 때 FormData 사용*/
       formData.append("image", event.target.files[0]);
+      /*"image는 폼데이터 필드의 이름임. 이건 api주소 따라 달라짐." 
+        따라서 여기서는 api주소가 image가 들어가있기 때문에 무조건 image라고 적어야함
+        append는 객체에 key와 value값 추가하는 거임. 즉 여기서는 formData라는 객체 안에
+        'image'라는 필드 이름을 추가하고 이 필드의 value값으로 우리가 선택한 파일(중 첫번째)을 받음*/
       
           axios
             .post("http://3.35.236.83/image", formData)
@@ -130,7 +129,8 @@ function EditProfile(){
               // 오류를 처리합니다.
             });
         };
-    
+    /*사용자가 사진을 올리면, 올린 사진을 악시오스를 이용해서 서버에 이미지 보낸 후 
+    서버에서 변환해준 string타입의 url를 userIMG라는 useState에 저장*/
     const handleClick = () => {
         
         setIsClicked(!isClicked);
@@ -143,24 +143,24 @@ function EditProfile(){
     const handleUserNameChange = (event) => {
         setUserName(event.target.value);
     } /*사용자가 입력한 이름 가져와서 useName변수에 저장 */
-    const handleUserIntroduceChange = (event) => {
+    /*const handleUserIntroduceChange = (event) => {
         setUserIntroduce(event.target.value);
-    } /*사용자가 입력한 소개글 가져와서 useName변수에 저장 */
-    const handleUserSiteChange = (event) => {
+    } /*사용자가 입력한 소개글 가져와서 useIntroduce 변수에 저장 */
+    /*const handleUserSiteChange = (event) => {
         setUserSite(event.target.value);
-    } /*사용자가 입력한 사이트 가져와서 useName변수에 저장 */
-    const handleUserEmailChange = (event) => {
+    } /*사용자가 입력한 사이트 가져와서 useSite 변수에 저장 */
+    /*const handleUserEmailChange = (event) => {
         setUserEmail(event.target.value);
-    } /*사용자가 입력한 이메일 가져와서 useName변수에 저장 */
-    const handleUserGenderChange = (event) => {
+    } /*사용자가 입력한 이메일 가져와서 useEmail 변수에 저장 */
+    /*const handleUserGenderChange = (event) => {
         setUserGender(event.target.value);
-    } /*사용자가 입력한 성별 가져와서 useName변수에 저장 */
+    } /*사용자가 입력한 성별 가져와서 useGender 변수에 저장 */
     const handleUserAgeChange = (event) =>{
         setUserAge(event.target.value);
-    }
+    }/*사용자가 입력한 성별 가져와서 useAge 변수에 저장 */
     const handleUserPartChange = (event) =>{
         setUserPart(event.target.value)
-    }
+    }/*사용자가 입력한 성별 가져와서 usePart 변수에 저장 */
     const handlerSubmitChange = (event) => {
         event.preventDefault();/*제출할 때 새로고침 안되게 하는 역할 */
         setUser({
@@ -186,7 +186,8 @@ function EditProfile(){
             console.error('업데이트 실패',error);
         });
         
-    } /*submit버튼 누르면 context를 이용해서 현재 usestate에 있는 정보들 넘겨줌.*/
+    } /*submit버튼 누르면 context를 이용해서 현재 usestate에 있는 정보들 넘겨줌.
+        axios를 이용해서 서버로 변경된 데이터를 넘겨줌.*/
 
     const isSubmitDisabled = !isFormDirty || (
         userName === MyData.name &&
@@ -241,27 +242,19 @@ function EditProfile(){
                             <div>
                                 <div className="currentProfile">
                                     <span className="from_label">
-                                        <span>
-                                            {/*<img
-                                            src={isClicked ? "miniProfile2.png" : MyData.imgURL}
-                                            alt="중간프로필"
-                                            className="middle_profile"
-                                            onClick={handleClick}
-                                            />*/}
+                                        <span>                                  
                                             <img
                                             src={userImg}
                                             alt="프로필 이미지"
                                             className="profile-image"
                                             id="profileImage"
                                             />
-
                                         </span>
                                         <div className="top_from">
                                             <p>{userName}</p>
                                             <input type="file" accept="image/*" id="fileInput" onChange={handleFileUpload} style={{ display: 'none' }} />
                                             <label htmlFor="fileInput" style={{ cursor:'pointer', color:'dodgerblue' }}>프로필 사진 바꾸기</label>
-
-                                            {/*<ChangeProfileButton>프로필 사진 바꾸기</ChangeProfileButton>*/}
+                                            {/*input의 file태그를 사용해서 사용자의 파일에서 사진을 선택 */}
                                         </div>
                                     </span>
                                 </div><br></br>
@@ -269,11 +262,6 @@ function EditProfile(){
                                     <span className="form_label">사용자 이름</span>
                                     <input type="text" value={userName} onChange={(e) => {setUserName(e.target.value);handleUserNameChange(e); handleFieldChange();}} className="form_size1"></input>
                                 </div>
-
-                                {/*<div className="userIntroduce">
-                                    <span className="form_label">사용자 소개</span>
-                                    <input type="text" value={userIntroduce} onChange={(e) => {setUserIntroduce(e.target.value);handleUserIntroduceChange(e); handleFieldChange();}} className="form_size2"></input>
-                                </div>*/}
 
                                 <div className="userSite">
                                     <span className="form_label">나이</span>
@@ -287,7 +275,6 @@ function EditProfile(){
                             </div>
 
                             <div>
-
                                 <div className="submitButton">
                                     <input type="submit" value="제출" onClick={handlerSubmitChange} className="submit_button" disabled={isSubmitDisabled}></input>
                                 </div>
