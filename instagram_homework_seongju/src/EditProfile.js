@@ -104,6 +104,16 @@ function EditProfile(){
     const [isClicked, setIsClicked] = useState(false); /*사진바꾸기 */
     const [userImg, setUserImg] = useState(MyData.imgURL)
 
+    function handleFileChange(event) {
+        const selectedFile = event.target.files[0];
+        if (selectedFile) {
+          const imageURL = URL.createObjectURL(selectedFile);
+          const imgElement = document.getElementById("profileImage");
+          imgElement.src = imageURL;
+          setUserImg(imageURL);
+        }
+      }  
+
     const handleClick = () => {
         
         setIsClicked(!isClicked);
@@ -141,6 +151,7 @@ function EditProfile(){
             age: userAge,
             part: userPart,
             introduce: userIntroduce,
+            imgURL: userImg,
         });
         
     } /*submit버튼 누르면 context를 이용해서 현재 usestate에 있는 정보들 넘겨줌.*/
@@ -148,7 +159,8 @@ function EditProfile(){
     const isSubmitDisabled = !isFormDirty || (
         userName === MyData.name &&
         userAge === MyData.age&&
-        userPart === MyData.Part
+        userPart === MyData.Part&&
+        userImg === MyData.imgURL
       ); /*폼 변경사항이 없거나(isFormDity가 부정인 상황)
       또는 userState정보들이 초기 context의 값과 똑같은 상황에서
       폼 버튼 비활성화 */
@@ -198,16 +210,26 @@ function EditProfile(){
                                 <div className="currentProfile">
                                     <span className="from_label">
                                         <span>
-                                            <img
+                                            {/*<img
                                             src={isClicked ? "miniProfile2.png" : MyData.imgURL}
                                             alt="중간프로필"
                                             className="middle_profile"
                                             onClick={handleClick}
+                                            />*/}
+                                            <img
+                                            src={userImg}
+                                            alt="프로필 이미지"
+                                            className="profile-image"
+                                            id="profileImage"
                                             />
+
                                         </span>
                                         <div className="top_from">
                                             <p>{userName}</p>
-                                            <ChangeProfileButton><p id="atag_change_profile">프로필 사진 바꾸기</p></ChangeProfileButton>
+                                            <input type="file" accept="image/*" id="fileInput" onChange={handleFileChange} style={{ display: 'none' }} />
+                                            <label htmlFor="fileInput" style={{ cursor:'pointer', color:'dodgerblue' }}>프로필 사진 바꾸기</label>
+
+                                            {/*<ChangeProfileButton>프로필 사진 바꾸기</ChangeProfileButton>*/}
                                         </div>
                                     </span>
                                 </div><br></br>
@@ -223,12 +245,12 @@ function EditProfile(){
 
                                 <div className="userSite">
                                     <span className="form_label">나이</span>
-                                    <input type="text" value={userAge} onChange={(e) => {setUserAge(e.target.value);handleUserSiteChange(e); handleFieldChange();}} className="form_size1"></input>
+                                    <input type="text" value={userAge} onChange={(e) => {setUserAge(e.target.value);handleUserAgeChange(e); handleFieldChange();}} className="form_size1"></input>
                                 </div>
 
                                 <div className="userEmail">
                                     <span className="form_label">파트</span>
-                                    <input type="text" value={userPart} onChange={(e) => {setUserPart(e.target.value);handleUserEmailChange(e); handleFieldChange();}} className="form_size1"></input>
+                                    <input type="text" value={userPart} onChange={(e) => {setUserPart(e.target.value);handleUserPartChange(e); handleFieldChange();}} className="form_size1"></input>
                                 </div>
                             </div>
 
