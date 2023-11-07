@@ -104,7 +104,7 @@ function EditProfile(){
     const [isClicked, setIsClicked] = useState(false); /*사진바꾸기 */
     const [userImg, setUserImg] = useState(MyData.imgURL)
 
-    function handleFileChange(event) {
+    /*function handleFileChange(event) {
         const selectedFile = event.target.files[0];
         if (selectedFile) {
           const imageURL = URL.createObjectURL(selectedFile);
@@ -112,8 +112,25 @@ function EditProfile(){
           imgElement.src = imageURL;
           setUserImg(imageURL);
         }
-      }  
-
+    }*/
+    
+    const handleFileUpload = (event) => {
+      const formData = new FormData();
+      formData.append("image", event.target.files[0]);
+      
+          axios
+            .post("http://3.35.236.83/image", formData)
+            .then((response) => {
+              console.log("이미지가 성공적으로 업로드되었습니다:", response.data);
+              setUserImg(response.data)
+              // 서버에서의 응답을 처리합니다.
+            })
+            .catch((error) => {
+              console.error("이미지 업로드 중 오류 발생:", error);
+              // 오류를 처리합니다.
+            });
+        };
+    
     const handleClick = () => {
         
         setIsClicked(!isClicked);
@@ -152,6 +169,21 @@ function EditProfile(){
             part: userPart,
             introduce: userIntroduce,
             imgURL: userImg,
+        });
+        const updatedData = {
+            name: userName,
+            age: userAge,
+            part: userPart,
+            introduce: userIntroduce,
+            imgURL: userImg,
+        };
+        
+        axios.patch('http://3.35.236.83/pard/update/이성주', updatedData)
+        .then((response) => {
+            console.log('업데이트 성공', response.data);
+        })
+        .catch((error) =>{
+            console.error('업데이트 실패',error);
         });
         
     } /*submit버튼 누르면 context를 이용해서 현재 usestate에 있는 정보들 넘겨줌.*/
@@ -226,7 +258,7 @@ function EditProfile(){
                                         </span>
                                         <div className="top_from">
                                             <p>{userName}</p>
-                                            <input type="file" accept="image/*" id="fileInput" onChange={handleFileChange} style={{ display: 'none' }} />
+                                            <input type="file" accept="image/*" id="fileInput" onChange={handleFileUpload} style={{ display: 'none' }} />
                                             <label htmlFor="fileInput" style={{ cursor:'pointer', color:'dodgerblue' }}>프로필 사진 바꾸기</label>
 
                                             {/*<ChangeProfileButton>프로필 사진 바꾸기</ChangeProfileButton>*/}
